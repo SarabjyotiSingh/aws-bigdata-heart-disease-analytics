@@ -33,7 +33,7 @@ aws-bigdata-heart-disease-analytics/
 │   ├── glue_etl_job.py        # AWS Glue PySpark ETL script
 
 
-![AWS Big Data Pipeline Architecture](docs/Untitled diagram-2025-11-18-034613.png)
+![AWS Big Data Pipeline Architecture](docs/architecture-diagram.png)
 
 ### Data Pipeline Flow
 
