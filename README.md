@@ -16,14 +16,7 @@ This project demonstrates an end-to-end Big Data analytics pipeline built on AWS
 - 🎯 **Real-World Dataset**: UCI Heart Disease dataset analysis
 
 ---
-
-22
-
-
-53
-```22
-22
-
+```
 ---
 
 ## 📁 Repository Structure
