@@ -17,40 +17,12 @@ This project demonstrates an end-to-end Big Data analytics pipeline built on AWS
 
 ---
 
-## 🏗️ Architecture
+22
 
-```
-┌─────────────────┐
-│  Raw Data (CSV) │
-│   Heart Disease │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   Amazon S3     │
-│  (Raw Bucket)   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   AWS Glue      │
-│  - Crawler      │
-│  - ETL Jobs     │
-│  - Data Catalog │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   Amazon S3     │
-│(Processed Bucket)│
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  Amazon Athena  │
-│  (SQL Queries)  │
-└─────────────────┘
-```
+
+53
+```22
+22
 
 ---
 
@@ -66,7 +38,55 @@ aws-bigdata-heart-disease-analytics/
 │
 ├── scripts/
 │   ├── glue_etl_job.py        # AWS Glue PySpark ETL script
-│   ├── create_glue_crawler.py # Automated crawler setup
+
+
+![AWS Big Data Pipeline Architecture](docs/Untitled diagram-2025-11-18-034613.png)
+
+### Data Pipeline Flow
+
+Our Big Data pipeline follows these key stages:
+
+1. **📤 Data Ingestion**
+   - Upload `heart.csv` dataset to S3 Raw Bucket
+   - Source: UCI Heart Disease dataset (303 records, 14 features)
+
+2. **🔍 Schema Detection**
+   - AWS Glue Crawler scans S3 raw data
+   - Automatically detects schema and creates table in Data Catalog
+   - Metadata stored for downstream processing
+
+3. **⚙️ ETL Processing** 
+   - AWS Glue ETL Job (PySpark) performs:
+     - Data quality checks (nulls, duplicates)
+     - Data cleaning and deduplication
+     - Feature engineering (age_group, sex_label, risk_category)
+     - Data validation and statistics
+
+4. **💾 Processed Storage**
+   - Transformed data written to S3 Processed Bucket
+   - Format: Parquet (optimized for analytics)
+   - Partitioned by: `age_group` and `sex_label`
+
+5. **📊 SQL Analytics**
+   - Amazon Athena for serverless SQL queries
+   - Interactive data exploration
+   - Generate insights and aggregations
+
+6. **📈 Visualization**
+   - Power BI connects to Athena
+   - Interactive dashboards and reports
+   - Visual analytics for stakeholders
+
+### Key AWS Services
+
+| Service | Purpose | Configuration |
+|---------|---------|---------------|
+| **Amazon S3** | Object storage for raw and processed data | 2 buckets (raw + processed) |
+| **AWS Glue Crawler** | Automatic schema detection | Scans S3, populates Data Catalog |
+| **AWS Glue Data Catalog** | Centralized metadata repository | Stores table schemas |
+| **AWS Glue ETL** | Serverless data transformation | PySpark job with 6 processing steps |
+| **Amazon Athena** | Serverless SQL query engine | Queries Parquet data in S3 |
+| **Power BI** | Business intelligence visualization | Connects via Athena connector |│   ├── create_glue_crawler.py # Automated crawler setup
 │   └── athena_queries.sql     # Sample Athena SQL queries
 │
 ├── config/
